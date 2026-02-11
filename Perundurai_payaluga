@@ -97,3 +97,95 @@ $email->setFrom('you@example.com', 'Your Name')
 If you want, I can make a **ready-to-use list of all CI4 Email functions with examples** including **SMTP, Mailgun, SendGrid integration, BCC/CC, attachments, and HTML templates** in one table. This is super handy as a reference while coding.
 
 Do you want me to do that?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Ah, you’re asking about **drawbacks of email integration in CodeIgniter 4**. Let’s go through them carefully and realistically:
+
+---
+
+## **1. Reliance on External SMTP**
+
+* CI4 doesn’t send email natively to the internet; it relies on **SMTP servers**.
+* If your SMTP host is down or credentials change, email sending will fail.
+* Using free providers (like Gmail) often comes with **rate limits**.
+
+---
+
+## **2. Blocking Requests**
+
+* CI4 sends emails **synchronously** by default.
+* If you send an email inside a controller during a request, the user must wait until sending finishes.
+* Large emails or slow SMTP servers can cause **sluggish user experience**.
+* Solution: Use async queues or cron jobs.
+
+---
+
+## **3. Security Concerns**
+
+* Hardcoding credentials in `Config/Email.php` is risky.
+* If your code leaks, email accounts can be compromised.
+* Gmail/Outlook SMTP often require **App passwords** or OAuth for secure access.
+
+---
+
+## **4. Debugging Complexity**
+
+* When an email fails, CI4’s error messages are sometimes vague.
+* Common issues:
+
+  * SMTP blocked by host firewall
+  * SSL/TLS mismatches
+  * Email flagged as spam
+* You may need to debug headers manually.
+
+---
+
+## **5. Spam and Deliverability**
+
+* Emails sent via default CI4 settings may end up in **spam** if SPF, DKIM, or DMARC are not configured.
+* Sending plain SMTP without authentication or from a generic domain increases risk.
+
+---
+
+## **6. Limited Advanced Features**
+
+* CI4’s email class is simple; advanced features like:
+
+  * Tracking opens/clicks
+  * Handling bounces
+  * Templating with dynamic layouts
+    require **additional libraries or custom coding**.
+
+---
+
+## **Summary**
+
+| Drawback          | Explanation                                             |
+| ----------------- | ------------------------------------------------------- |
+| SMTP dependency   | Need a reliable mail server; failures stop emails       |
+| Blocking requests | Emails are sent synchronously by default                |
+| Security          | Risk of exposing credentials                            |
+| Debugging         | Error messages not always clear                         |
+| Spam risk         | Poor deliverability without proper email authentication |
+| Limited features  | No built-in templates, tracking, or queues              |
+
+---
+
+If you want, I can also make a **list of best practices to mitigate these drawbacks** in CI4. That way, your email integration will be **robust and secure**.
+
+Do you want me to do that?
+
