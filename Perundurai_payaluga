@@ -1,0 +1,99 @@
+Ah! You want to know the **predefined (built-in) functions of CodeIgniter 4’s Email library** so you can send emails efficiently. Let’s break them down clearly.
+
+In **CI4**, the Email library (`CodeIgniter\Email\Email`) comes with a rich set of methods you can use out of the box.
+
+---
+
+## **1. Configuration & Initialization**
+
+| Function                                                              | Description                                                         |                                                 |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------- |
+| `initialize(array $config)`                                           | Initialize or override email settings dynamically.                  |                                                 |
+| `clear(bool $clearAttachments = false)`                               | Clear email content, headers, and optionally attachments for reuse. |                                                 |
+| `setFrom(string $from, string $name = '', string $returnPath = null)` | Set the “From” address and name.                                    |                                                 |
+| `setTo(string                                                         | array $to)`                                                         | Set the recipient(s). Can be a string or array. |
+| `setCC(string                                                         | array $cc)`                                                         | Set carbon copy recipients.                     |
+| `setBCC(string                                                        | array $bcc)`                                                        | Set blind carbon copy recipients.               |
+| `setReplyTo(string $email, string $name = '')`                        | Set reply-to email address.                                         |                                                 |
+
+---
+
+## **2. Email Content**
+
+| Function                                                                                                  | Description                                              |
+| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `setSubject(string $subject)`                                                                             | Set email subject.                                       |
+| `setMessage(string $body)`                                                                                | Set email body (HTML or plain text based on `mailType`). |
+| `attach(string $filePath, string $disposition = 'attachment', string $newName = null, string $mime = '')` | Attach a file to the email.                              |
+| `attachContent(string $data, string $filename, string $disposition = 'attachment', string $mime = '')`    | Attach content from a string instead of a file.          |
+
+---
+
+## **3. Sending Emails**
+
+| Function                                                                  | Description                                                    |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `send(bool $autoClear = true)`                                            | Send the email. Returns `true` on success, `false` on failure. |
+| `printDebugger(array $include = ['headers', 'subject', 'body', 'debug'])` | Get debug info if sending fails. Useful for troubleshooting.   |
+| `sendWithRetry(int $times = 3, int $interval = 2)`                        | Try sending multiple times if fails (CI4.3+).                  |
+
+---
+
+## **4. Helpers & Utility Methods**
+
+| Function             | Description                                        |
+| -------------------- | -------------------------------------------------- |
+| `getProtocol()`      | Returns the email protocol (SMTP, mail, sendmail). |
+| `getDebugMessages()` | Returns debug messages after sending.              |
+| `getSubject()`       | Returns the email subject.                         |
+| `getBody()`          | Returns the email body.                            |
+| `getFrom()`          | Returns sender info.                               |
+| `getRecipients()`    | Returns recipient info.                            |
+
+---
+
+## **5. Example: Full Email with TO, CC, BCC, and Attachment**
+
+```php
+$email = \Config\Services::email();
+
+$email->setFrom('your_email@example.com', 'Your Name');
+$email->setTo('recipient@example.com');
+$email->setCC(['cc1@example.com', 'cc2@example.com']);
+$email->setBCC('bcc@example.com');
+$email->setReplyTo('replyto@example.com', 'Reply Name');
+
+$email->setSubject('CI4 Predefined Functions Demo');
+$email->setMessage('<p>This email demonstrates CI4 built-in email functions.</p>');
+
+// Attach a file
+$email->attach('/path/to/file.pdf');
+
+if ($email->send()) {
+    echo "Email sent successfully!";
+} else {
+    echo $email->printDebugger();
+}
+```
+
+---
+
+✅ **Key Notes:**
+
+* All these functions are **chainable**, so you can write:
+
+```php
+$email->setFrom('you@example.com', 'Your Name')
+      ->setTo('recipient@example.com')
+      ->setSubject('Hello')
+      ->setMessage('Test')
+      ->send();
+```
+
+* You can reuse the email object by calling `$email->clear()` before sending another email.
+
+---
+
+If you want, I can make a **ready-to-use list of all CI4 Email functions with examples** including **SMTP, Mailgun, SendGrid integration, BCC/CC, attachments, and HTML templates** in one table. This is super handy as a reference while coding.
+
+Do you want me to do that?
